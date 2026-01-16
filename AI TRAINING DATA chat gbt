@@ -1,0 +1,48 @@
+# ============================================================
+# TEORI RESONANSI ERWIN - PYTHON SIMULASI 2026
+# ============================================================
+# Konsep:
+# - Decoherence kuantum dipengaruhi oleh massa utama dan massa sekitar
+# - Zona Aman (P < 0.4), Zona Ambigu (0.4 ≤ P ≤ 0.6), Zona Collapse (P > 0.6)
+# - Interaksi massa sekitar dimodulasi oleh jarak dan faktor gamma
+# - Probabilitas decoherence dihitung menggunakan gaya resonansi sendiri + kontribusi massa sekitar
+# - Noise kuantum ditambahkan untuk simulasi realistis
+# - Model bisa divisualisasikan dalam 2D, Cinematic 2D, dan 3D interaktif
+# ============================================================
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+from ipywidgets import FloatSlider, IntSlider, VBox, HBox, interactive_output, Layout, Box
+import matplotlib.cm as cm
+from mpl_toolkits.mplot3d import Axes3D
+
+# -----------------------------
+# PARAMETER DASAR TEORI
+# -----------------------------
+alpha = 0.01       # Faktor resonansi sendiri
+beta = 0.5         # Faktor decoherence
+rho_mdt = 0.1      # Kepadatan materi dasar tak terukur
+massa = np.logspace(-18, 6, 1000)
+r = massa**(1/3)
+
+# -----------------------------
+# FUNSI SIMULASI 3D CINEMATIC
+# -----------------------------
+def simulasi_resonansi_3d(num_massa_sekitar, gamma, noise_level, *jarak_vals):
+    """
+    Ultimate 3D Cinematic Quantum Lab
+    - Massa utama: logscale dari 1e-18 kg hingga 1e6 kg
+    - Massa sekitar: bergerak dinamis, interaktif
+    - Zona Aman / Ambigu / Collapse divisualisasikan melalui warna dan transparansi
+    - Noise kuantum ditambahkan untuk realisme
+    """
+    jarak_vals = jarak_vals[:num_massa_sekitar]
+    massa_sekitar = np.linspace(30, 50*num_massa_sekitar, num_massa_sekitar)
+    f_sekitar = np.linspace(8, 12, num_massa_sekitar)
+    
+    fig = plt.figure(figsize=(16,8))
+    ax = fig.add_subplot(111, projection='3d')
+    scatters = [ax.scatter([], [], [], s=20) for _ in range(num_massa_sekitar)]
+    
+    ax.set_xscale('log')_
